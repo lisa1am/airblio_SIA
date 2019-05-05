@@ -1,0 +1,13 @@
+.hd{
+
+  border-bottom: solid 2px;
+}
+
+
+.flexbox{
+
+  display:flex;
+  justify-content: center;
+  justify-content:space-around;
+  padding-top: 100px;
+}

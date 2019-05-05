@@ -1,0 +1,31 @@
+
+.hd{
+  border-bottom: solid 2px;
+}
+
+
+.titre{
+
+  padding-top: 20px;
+
+
+}
+
+
+
+.commandes{
+  border: solid 2px;
+
+}
+
+.diventreprise{
+  padding-top: 30 px;
+  border: solid 2px;
+}
+ .liste-group{
+
+   padding-top: 20px;
+ }
+ .boutton{
+    border-radius: 10px;
+ }
