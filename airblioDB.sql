@@ -1,18 +1,19 @@
-DROP TABLE IF EXISTS Responsable_technique ;
-DROP TABLE IF EXISTS Affectation_materiel;
-DROP TABLE IF EXISTS Affectation_equipe;
+DROP TABLE IF EXISTS responsabletechnique ;
+DROP TABLE IF EXISTS affectationmateriel;
+DROP TABLE IF EXISTS affectationequipe;
 DROP TABLE IF EXISTS intervention ;
-DROP TABLE IF EXISTS Site_intervention;
-DROP TABLE IF EXISTS Intervenant;
-DROP TABLE IF EXISTS Equipe_intervention;
-DROP TABLE IF EXISTS Base;
-DROP TABLE IF EXISTS Materiel ;
-DROP TABLE IF EXISTS Localisation;
+DROP TABLE IF EXISTS siteintervention;
+DROP TABLE IF EXISTS intervenant;
+DROP TABLE IF EXISTS equipeintervention;
+DROP TABLE IF EXISTS base;
+DROP TABLE IF EXISTS materiel ;
+DROP TABLE IF EXISTS localisation;
 
 
 
 
-CREATE TABLE Intervenant
+
+CREATE TABLE intervenant
 (
  intervenant_id INT NOT NULL AUTO_INCREMENT,
  nom      	VARCHAR(50) NOT NULL,
@@ -27,7 +28,7 @@ CREATE TABLE Intervenant
 
 
 
-CREATE TABLE Responsable_technique
+CREATE TABLE responsabletechnique
 (
  responsable_technique_id INT NOT NULL AUTO_INCREMENT, 
  nom      	VARCHAR(50) NOT NULL,
@@ -39,7 +40,7 @@ CREATE TABLE Responsable_technique
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Materiel
+CREATE TABLE materiel
 (
  materiel_id    	  INT NOT NULL AUTO_INCREMENT,
  libelle_materiel     INT NOT NULL,
@@ -51,7 +52,7 @@ CREATE TABLE Materiel
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Localisation
+CREATE TABLE localisation
 (
  localisation_id    INT NOT NULL AUTO_INCREMENT,
  longitude     		DOUBLE NOT NULL,
@@ -62,7 +63,7 @@ CREATE TABLE Localisation
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Base
+CREATE TABLE base
 (
  base_id    		INT NOT NULL AUTO_INCREMENT,
  nom_base     		VARCHAR(50) NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE Base
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Site_intervention
+CREATE TABLE siteintervention
 (
  site_intervention_id    INT NOT NULL AUTO_INCREMENT,
  nom_site     			 VARCHAR(50) NOT NULL,
@@ -86,7 +87,7 @@ CREATE TABLE Site_intervention
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Affectation_materiel
+CREATE TABLE affectationmateriel
 (
  affectation_materiel_id   INT NOT NULL AUTO_INCREMENT,
  intervention_id    	   INT NOT NULL,
@@ -96,7 +97,7 @@ CREATE TABLE Affectation_materiel
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Affectation_equipe
+CREATE TABLE affectationequipe
 (
  affectation_equipe_id 			INT NOT NULL AUTO_INCREMENT,
  intervention_id    			INT NOT NULL,
@@ -106,7 +107,7 @@ CREATE TABLE Affectation_equipe
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE Equipe_intervention
+CREATE TABLE equipeintervention
 (
  equipe_intervention_id	   INT NOT NULL AUTO_INCREMENT,
  nom_equipe    			   VARCHAR(50) NOT NULL,
@@ -132,48 +133,48 @@ CREATE TABLE intervention
 
 
 
-ALTER TABLE Materiel 
+ALTER TABLE materiel 
 ADD CONSTRAINT materiel_localisation_fk FOREIGN KEY (localisation_id) 
-REFERENCES Localisation (localisation_id);
+REFERENCES localisation (localisation_id);
 
-ALTER TABLE Site_intervention 
+ALTER TABLE siteintervention 
 ADD CONSTRAINT site_intervention_localisation_fk FOREIGN KEY (localisation_id) 
-REFERENCES Localisation (localisation_id);
+REFERENCES localisation (localisation_id);
 
-ALTER TABLE Base 
+ALTER TABLE base 
 ADD CONSTRAINT base_localisation_fk FOREIGN KEY (localisation_id) 
-REFERENCES Localisation (localisation_id);
+REFERENCES localisation (localisation_id);
 
-ALTER TABLE Intervenant 
+ALTER TABLE intervenant 
 ADD CONSTRAINT equipe_id_fk FOREIGN KEY (equipe_id) 
-REFERENCES Equipe_intervention (equipe_intervention_id);
+REFERENCES equipeintervention (equipe_intervention_id);
 
-ALTER TABLE Affectation_materiel 
+ALTER TABLE affectationmateriel 
 ADD CONSTRAINT intervention_affectation_materiel_fk FOREIGN KEY (intervention_id) 
-REFERENCES Intervention (intervention_id);
+REFERENCES intervention (intervention_id);
 
 
-ALTER TABLE Affectation_materiel 
+ALTER TABLE affectationmateriel 
 ADD CONSTRAINT materiel_affectation_materiel_id_fk FOREIGN KEY (materiel_id) 
-REFERENCES Materiel (materiel_id);
+REFERENCES materiel (materiel_id);
 
-ALTER TABLE Affectation_equipe -- OU indisponibilité ?
+ALTER TABLE affectationequipe -- OU indisponibilité ?
 ADD CONSTRAINT intervention_affectation_equipe_id_fk FOREIGN KEY (intervention_id) 
 REFERENCES intervention (intervention_id);
 
 
-ALTER TABLE Affectation_equipe 
+ALTER TABLE affectationequipe 
 ADD CONSTRAINT equipe_affectation_equipe_id_fk FOREIGN KEY (equipe_intervention_id) 
-REFERENCES Equipe_intervention (equipe_intervention_id);
+REFERENCES equipeintervention (equipe_intervention_id);
 
 
-ALTER TABLE Equipe_intervention 
+ALTER TABLE equipeintervention 
 ADD CONSTRAINT equipe_intervention_localisation_id_fk FOREIGN KEY (localisation_id) 
-REFERENCES Localisation (localisation_id);
+REFERENCES localisation (localisation_id);
 
 ALTER TABLE intervention 
 ADD CONSTRAINT intervention_site_id_fk FOREIGN KEY (site_intervention_id) 
-REFERENCES Site_intervention (site_intervention_id);
+REFERENCES siteintervention (site_intervention_id);
 
 
 
@@ -181,14 +182,14 @@ REFERENCES Site_intervention (site_intervention_id);
 
 -- INSERT
 
-INSERT INTO `Intervenant` (`nom`, `prenom`, `email`, `password`) VALUES
+INSERT INTO `intervenant` (`nom`, `prenom`, `email`, `password`) VALUES
 ('Fanton', 'Corentin', 'corentin.fanton@dauphine.eu', 'password'),
 ('Etienne', 'Jean', 'etienne.jean@dauphine.eu', 'password'),
 ('Arzur', 'Samuel', 'samuel.arzur@dauphine.eu', 'password'),
 ('Ait-mouloud', 'Lisa', 'aitmouloud.lisa@dauphine.eu', 'password');
 
 
-INSERT INTO `Localisation`(`longitude`, `latitude`) VALUES 
+INSERT INTO `localisation`(`longitude`, `latitude`) VALUES 
 (-2.2321610089416026,46.75224359162925),
 (-1.930954168519179,46.60146452683979),
 (3.536298220910112, 43.1555354668254),
@@ -200,32 +201,32 @@ INSERT INTO `Localisation`(`longitude`, `latitude`) VALUES
 
 
 
-INSERT INTO `Materiel`(`libelle_materiel`,`localisation_id`,`quantite`) VALUES
+INSERT INTO `materiel`(`libelle_materiel`,`localisation_id`,`quantite`) VALUES
 ('AIRBLIOBASE', 6, 30),
 ('AIRBLIOSONAR', 3, 5),
 ('AIRBLIOSOUDURE', 1, 6),
 ('AIRBLIOSCANNER', 7, 3),
 ('AIRBLIOMICROSCOPEB', 8,2);
 
-INSERT INTO `Equipe_intervention`(`nom_equipe`,`localisation_id`) VALUES
+INSERT INTO `equipeintervention`(`nom_equipe`,`localisation_id`) VALUES
 ('Equipe 1', 1),
 ('Equipe 2', 2),
 ('Equipe 3', 3);
 
-INSERT INTO `Site_intervention`(`nom_site`,`profondeur`,`condition_site`,`localisation_id`) VALUES
+INSERT INTO `siteintervention`(`nom_site`,`profondeur`,`condition_site`,`localisation_id`) VALUES
 ('site A', 50, 'bonne condition blablabla', 1),
 ('site B', 30, 'bonne condition blablabla', 2),
 ('site C', 50, 'bonne condition blablabla', 3),
 ('site D', 100, 'bonne condition blablabla', 4),
 ('site E', 57, 'bonne condition blablabla', 5);
 
-INSERT INTO `Base`(`nom_base`,`localisation_id`) VALUES 
+INSERT INTO `base`(`nom_base`,`localisation_id`) VALUES 
 ('Base Marseille', 6),
 ('Base Bordeaux', 7),
 ('Base Brest', 7);
 
 
-INSERT INTO `Responsable_technique`(`nom`,`prenom`,`email`, `password`) VALUES
+INSERT INTO `responsabletechnique`(`nom`,`prenom`,`email`, `password`) VALUES
 ('Respotek', 'Jean', 'jeanadmin@gmail.com', 'password');
 
 INSERT INTO `intervention`(`client`, `site_intervention_id`, `date_debut`, `date_fin`) VALUES
