@@ -1,5 +1,5 @@
 project = {
-	name : 'mini-framework-php'
+	name : 'airblio_SIA'
 };
 
 function form_action(form_id)

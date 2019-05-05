@@ -29,25 +29,24 @@ class InterventionController
 {
 
 	public static function create($req)
-	{
+	{	
 
 		// récupérer les paramètres de la requête
-		$nom = $req['nom'];
-		$nb_vendu = $req['nb_vendu'];
+		$client = $req['client'];
+		$site_intervention_id = $req['site_intervention_id'];
 
 		// instantancier les objects Factory et Intervention
 		$inter = new Intervention();
 		$facto = new Factory();
-
 		// initialiser les propriétés de intervention
-		$inter->set_nom($nom);
-		$inter->set_nb_vendu($nb_vendu);
+		$inter->set_client($client);
+		$inter->set_site_intervention_id($site_intervention_id);
 
 		// ajouter l'intervention dans la base
 		$facto->create($inter);
 
 		// rediriger vers la liste de intervention
-		//header('Location:/airblio_SIA/controller/intervention.php?action=search');
+		header('Location:/airblio_SIA/controller/intervention.php?action=search');
 	}
 
 

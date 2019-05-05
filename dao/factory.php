@@ -28,9 +28,10 @@ class Factory
 	}
 
 	public function create($object)
-	{
+	{	
 		$this->_object = $object;
-		$query = $this->_generate_query(ACTION_CREATE, null);
+		$query = $this->_generate_query(ACTION_CREATE, null);		
+
 		return $this->_execute_query($query, ACTION_CREATE);
 	}
 
@@ -81,22 +82,27 @@ class Factory
 
 		foreach ($properties_names as $key => $value) 
 		{
-			if($key != 'id')
+
+			if($key != 'id'){
 				// créer la chaine de colonnes à partir des attributs
 				$attributes .= ($key < $nb_attribute - 1) ? $value . ", " : $value;
+			}
+
 		}
-		
+	
 		$values = "";
 		$settings = "";
 		$where = "";
 		$object_id = "";
-
+		$counter = 0;
 		foreach ($properties as $key => $value) 
 		{
-			// récupérer l'id
-			if($key == 'id') $object_id = $value;
-
-			if($key != 'id')
+			// récupérer l'id (le premier attribut)
+			if($counter == 0) {
+				$object_id = $value;
+			}
+			
+			if($counter != 0)
 			{
 				// lister les valeurs
 				$values .= ($key != end($properties_names)) 
@@ -110,8 +116,11 @@ class Factory
 				$where .= ($key != end($properties_names)) 
 				? $key." LIKE '%".$criteria."%' OR " : $key." LIKE '%".$criteria."%' ";
 			}
+			$counter++;
 		}
-
+		$counter=0;
+		
+		
 		// construire la requête en fonction de l'action
 		switch ($action) 
 		{
@@ -148,6 +157,7 @@ class Factory
 	private function _execute_query($query, $action)
 	{
 		// récupérer la chaîne de connection
+	
 		$con = $this->_database->get_connection();
 		$result = null;
 
